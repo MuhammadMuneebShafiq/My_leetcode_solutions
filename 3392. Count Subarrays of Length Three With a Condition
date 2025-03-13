@@ -1,0 +1,15 @@
+class Solution:
+    def countSubarrays(self, nums: List[int]) -> int:
+        from collections import deque
+        dq = deque([nums[0] , nums[1], nums[2]] , maxlen=3)
+        
+        cnt = 0
+        
+        if dq[1] == (dq[0] + dq[2])*2:
+            cnt += 1
+        for r in range(3, len(nums)):
+            dq.append(nums[r])
+            if dq[1] == (dq[0] + dq[2])*2:
+                #print(dq)
+                cnt += 1
+        return (cnt)
