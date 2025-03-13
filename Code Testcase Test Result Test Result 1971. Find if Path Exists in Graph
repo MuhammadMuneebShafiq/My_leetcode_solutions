@@ -1,0 +1,28 @@
+class Solution:
+    def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+
+        if source == destination:
+            return True
+        from collections import defaultdict, deque
+        graph = defaultdict(list)
+        visited = [False] * n  
+
+        for r in edges:
+            u , v = r
+            graph[u].append(v)
+            graph[v].append(u)
+
+        def bfs(graph , source , destination):
+            dq = deque([source])
+            visited[source] = True
+            while dq:
+                node = dq.popleft()
+                for neighbour in graph[node]:
+                    if not visited[neighbour]:
+                        if neighbour == destination:
+                            return True
+                        dq.append(neighbour)
+                        visited[neighbour] = True
+            return False
+
+        return (bfs(graph , source , destination))
