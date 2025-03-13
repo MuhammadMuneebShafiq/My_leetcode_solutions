@@ -1,0 +1,44 @@
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+
+        from collections import deque
+
+        n = len(mat)
+        m = len(mat[0])
+        temp = [[float('inf')]*m for _ in range(n)]
+
+        # calcullating zeroes
+        zeroes = deque()
+        for u in range(n):
+            for v in range(m):
+                if mat[u][v] == 0:
+                    zeroes.append((u,v))
+                    temp[u][v] = 0
+
+
+        def bfs(zeroes):
+            while zeroes:    
+
+                x , y = zeroes.popleft()
+                for dx , dy in [(0,1),(1,0),(0,-1),(-1,0)]:
+                    nx , ny = x+ dx , y + dy
+                    if 0 <= nx < n and 0 <= ny < m and temp[nx][ny] > temp[x][y] + 1:
+                        temp[nx][ny] = temp[x][y]+1
+                        zeroes.append((nx,ny))
+
+        bfs(zeroes)
+        return (temp)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
