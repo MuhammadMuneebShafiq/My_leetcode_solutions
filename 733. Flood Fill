@@ -1,0 +1,22 @@
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        from collections import deque
+        clr = image[sr][sc]
+        n , m = len(image) , len(image[0])
+        visited = [[0]*m for _ in range(n)]
+        image[sr][sc] = color
+        def bfs(i , j):
+            dq = deque()
+            dq.append((i,j))
+            visited[i][j] = 1
+
+            while dq:
+                x , y = dq.popleft()
+                for dx , dy in [[0,1] , [0,-1] , [1,0] , [-1,0] ]:
+                    nx , ny = x + dx, y + dy
+                    if (nx >= 0 and nx <= n-1) and (ny >= 0 and ny <= m-1) and (image[nx][ny] == clr) and visited[nx][ny] == 0:
+                        visited[nx][ny] = 1
+                        dq.append((nx,ny))
+                        image[nx][ny] = color
+        bfs(sr , sc)
+        return (image)
